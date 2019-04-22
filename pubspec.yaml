@@ -1,0 +1,36 @@
+name: aided_driving_app
+description: A new Flutter application.
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^0.1.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  font_awesome_flutter: ^8.0.1
+
+flutter:
+  uses-material-design: true
+
+  assets:
+  - assets/images/
+
+  fonts:
+  - family: WorkSansSemiBold
+    fonts:
+    - asset: assets/fonts/Work_Sans/WorkSans-SemiBold.ttf
+
+  - family: WorkSansBold
+    fonts:
+    - asset: assets/fonts/Work_Sans/WorkSans-Bold.ttf
+
+  - family: WorkSansMedium
+    fonts:
+    - asset: assets/fonts/Work_Sans/WorkSans-Medium.ttf
