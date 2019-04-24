@@ -9,18 +9,34 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^0.1.2
+  scoped_model: ^1.0.1
+  uuid: ^2.0.0
+  shared_preferences: ^0.5.1+1
+  json_annotation: ^2.0.0
+  local_auth: ^0.4.0+1
+  native_widgets: ^1.0.1
+  get_version: ^0.0.8+5
+  flutter_whatsnew: ^0.2.0+3
+  persist_theme: ^0.0.3+6
+  http: ^0.12.0+1
+  flutter_inner_drawer: ^0.2.5
+  fancy_bottom_navigation: ^0.3.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   font_awesome_flutter: ^8.0.1
+  build_runner: ^1.0.0
+  json_serializable: ^2.0.0
 
 flutter:
   uses-material-design: true
 
   assets:
-  - assets/images/
+  - assets/images/launch_image.jpg
+  - assets/images/person.jpg
+  - assets/images/login_logo.png
 
   fonts:
   - family: WorkSansSemiBold

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:aided_driving_app/pages/login/login_page.dart';
 import 'package:flutter/services.dart';
+import 'package:aided_driving_app/pages/home.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,6 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // This is the theme of your application.
         brightness: Brightness.light,
@@ -19,7 +21,8 @@ class MyApp extends StatelessWidget {
       ),
       home: SplashScreen(),
       routes: <String, WidgetBuilder>{
-        '/home': (BuildContext context) => new LoginPage()
+        '/login': (BuildContext context) => LoginPage(),
+        '/home' : (BuildContext context) => Home()
       },
     );
   }
@@ -31,13 +34,14 @@ class SplashScreen extends StatefulWidget{
 }
 
 class _SplashScreenState extends State<SplashScreen>{
+
   startTime() async{
     var _duration = new Duration(seconds: 3);
     return Timer(_duration, navigationPage);
   }
 
   void navigationPage(){
-    Navigator.of(context).pushReplacementNamed('/home');
+    Navigator.of(context).pushReplacementNamed('/login');
   }
 
   @override

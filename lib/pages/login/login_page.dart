@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:aided_driving_app/data/theme.dart' as Theme;
-import 'package:aided_driving_app/utils/painter/bubble_indication_painter.dart';
+import 'package:aided_driving_app/widgets/painter/bubble_indication_painter.dart';
+import 'package:aided_driving_app/pages/home.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -330,8 +332,8 @@ class _LoginPageState extends State<LoginPage>
                             fontFamily: "WorkSansBold"),
                       ),
                     ),
-                    onPressed: () =>
-                        showInSnackBar("你已经点击了登录按钮")),
+                    onPressed: () => Navigator.pushReplacementNamed(context, '/home')
+                        ),
               ),
             ],
           ),
