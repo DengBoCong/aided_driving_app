@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:aided_driving_app/data/theme.dart' as Theme;
 import 'package:aided_driving_app/widgets/painter/bubble_indication_painter.dart';
-import 'package:aided_driving_app/pages/home.dart';
+import 'package:aided_driving_app/pages/home_chart_view.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class LoginPage extends StatefulWidget {

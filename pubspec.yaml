@@ -21,6 +21,13 @@ dependencies:
   http: ^0.12.0+1
   flutter_inner_drawer: ^0.2.5
   fancy_bottom_navigation: ^0.3.2
+  animated_floatactionbuttons: ^0.1.0
+  shifting_tabbar: ^0.3.1
+  flutter_slidable: ^0.4.9
+  flutter_sequence_animation: ^3.0.0
+  share: ^0.6.0+1
+  url_launcher: ^4.0.2
+  charts_flutter: ^0.6.0
 
 dev_dependencies:
   flutter_test:
@@ -34,9 +41,26 @@ flutter:
   uses-material-design: true
 
   assets:
-  - assets/images/launch_image.jpg
-  - assets/images/person.jpg
-  - assets/images/login_logo.png
+  - assets/images/
+  - resources/lang/
+#  - assets/images/launch_image.jpg
+  #  - assets/images/person.jpg
+  #  - assets/images/login_logo.png
+  #  - assets/images/header.jpg
+  #  - assets/images/body.jpg
+  #  - assets/images/profile_header_background.png
+  #  - assets/images/portfolio_1.jpeg
+  #  - assets/images/portfolio_2.jpeg
+  #  - assets/images/portfolio_3.jpeg
+  #  - assets/images/portfolio_4.jpeg
+  #  - assets/images/portfolio_5.jpeg
+  #  - assets/images/portfolio_6.jpeg
+  #  - assets/images/place_holder.jpg
+  #  - assets/images/place_holder_2.jpg
+  #  - assets/images/place_holder_3.jpg
+  #  - resources/lang/ch.json
+  #  - resources/lang/en.json
+  #  - resources/lang/pt.json
 
   fonts:
   - family: WorkSansSemiBold

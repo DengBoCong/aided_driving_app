@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:aided_driving_app/pages/login/login_page.dart';
 import 'package:flutter/services.dart';
-import 'package:aided_driving_app/pages/home.dart';
+import 'package:aided_driving_app/pages/home_chart_view.dart';
 
 void main() => runApp(MyApp());
 
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       home: SplashScreen(),
       routes: <String, WidgetBuilder>{
         '/login': (BuildContext context) => LoginPage(),
-        '/home' : (BuildContext context) => Home()
+        '/home' : (BuildContext context) => HomeChartViewPage(),
       },
     );
   }

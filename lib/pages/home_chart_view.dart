@@ -2,8 +2,53 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inner_drawer/inner_drawer.dart';
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
-class Home extends StatelessWidget
+import 'package:animated_floatactionbuttons/animated_floatactionbuttons.dart';
+import 'package:aided_driving_app/data/theme.dart' as GTheme;
+import 'package:aided_driving_app/pages/message/my_message_page.dart';
+import 'package:aided_driving_app/pages/doctor/private_doctor_page.dart';
+import 'package:aided_driving_app/pages/home_text_view.dart';
+import 'package:aided_driving_app/utils/blank_fade_route.dart';
+import 'package:aided_driving_app/pages/report/report_page.dart';
+import 'package:aided_driving_app/pages/wallet/wallet_page.dart';
+import 'package:aided_driving_app/pages/household/household_page.dart';
+
+class HomeChartViewPage extends StatelessWidget
 {
+  Widget call(){
+    return Container(
+      child: FloatingActionButton(
+        heroTag: "callButton",
+        backgroundColor: GTheme.Colors.mainColor,
+        onPressed: null,
+        tooltip: '呼叫紧急联系人',
+        child: Icon(Icons.call, color: GTheme.Colors.iconColor,),
+      ),
+    );
+  }
+
+  Widget driving(){
+    return Container(
+      child: FloatingActionButton(
+        heroTag: "drivingButton",
+        backgroundColor: GTheme.Colors.mainColor,
+        onPressed: null,
+        tooltip: '驾车模式',
+        child: Icon(Icons.drive_eta, color: GTheme.Colors.iconColor,),
+      ),
+    );
+  }
+
+  Widget textView(BuildContext context){
+    return Container(
+      child: FloatingActionButton(
+        heroTag: "shareButton",
+        backgroundColor: GTheme.Colors.mainColor,
+        onPressed: () => Navigator.of(context).push(FadeRoute(HomeTextViewPage())),
+        tooltip: '文字模式',
+        child: Icon(Icons.assignment, color: GTheme.Colors.iconColor,),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,11 +56,29 @@ class Home extends StatelessWidget
       debugShowCheckedModeBanner: false,
       title: 'Inner Drawer',
       theme: ThemeData(
-        primarySwatch: Colors.grey,
+        primarySwatch: Colors.blue,
       ),
       home: Scaffold(
         body: MyHomePage(title: '陌梦'),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+        floatingActionButton: AnimatedFloatingActionButton(
+          fabButtons: <Widget>[
+            call(),
+            driving(),
+            textView(context),
+          ],
+          colorEndAnimation: Colors.red,
+          colorStartAnimation: GTheme.Colors.mainColor,
+          animatedIconData: AnimatedIcons.menu_close,
+        ),
       ),
+      routes: <String, WidgetBuilder>{
+        '/myMessage' : (BuildContext context) => MyMessagePage(),
+        '/privateDoctor' : (BuildContext context) => PrivateDoctorPage(),
+        '/healthyReport' : (BuildContext context) => ReportPage(),
+        '/myWallet' : (BuildContext context) => WalletPage(),
+        '/household' : (BuildContext context) => HouseholdPage(),
+      },
     );
   }
 }
@@ -134,18 +197,28 @@ class _MyHomePageState extends State<MyHomePage>
                           leading:Icon(Icons.email),
                           subtitle: Text("hah"),
                           trailing: Icon(Icons.add),
+                          onTap: () => Navigator.of(context).pushNamed('/myMessage'),
                         ),
                         ListTile(
                           title:   Text("我的钱包"),
                           leading: Icon(Icons.monetization_on),
+                          subtitle: Text("hah"),
+                          trailing: Icon(Icons.assignment),
+                          onTap: () => Navigator.of(context).pushNamed('/myWallet'),
                         ),
                         ListTile(
-                          title:   Text("健康周报"),
+                          title:   Text("智能周报"),
                           leading: Icon(Icons.assignment),
+                          subtitle: Text("6sa"),
+                          trailing: Icon(Icons.access_alarm),
+                          onTap: () => Navigator.of(context).pushNamed('/healthyReport'),
                         ),
                         ListTile(
                           title:   Text("私人医生"),
                           leading: Icon(Icons.perm_contact_calendar),
+                          subtitle: Text("6sa"),
+                          trailing: Icon(Icons.access_alarm),
+                          onTap: () => Navigator.of(context).pushNamed('/privateDoctor'),
                         ),
                         Divider(),
                         ListTile(
@@ -235,8 +308,11 @@ class _MyHomePageState extends State<MyHomePage>
               tabs: [
                 TabData(iconData: Icons.drive_eta, title: "驾驶情况"),
                 TabData(iconData: Icons.assignment_ind, title: "健康情况"),
-                TabData(iconData: Icons.shopping_cart, title: "Basket")
+                TabData(iconData: Icons.important_devices, title: "实时管家")
               ],
+              circleColor: GTheme.Colors.mainColor,
+              textColor: GTheme.Colors.mainColor,
+              inactiveIconColor: GTheme.Colors.mainColor,
               onTabChangedListener: (position){
                 setState(() {
 
