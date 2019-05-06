@@ -11,6 +11,8 @@ import 'package:aided_driving_app/utils/blank_fade_route.dart';
 import 'package:aided_driving_app/pages/report/report_page.dart';
 import 'package:aided_driving_app/pages/wallet/wallet_page.dart';
 import 'package:aided_driving_app/pages/household/household_page.dart';
+import 'package:aided_driving_app/pages/driving/driving_page.dart';
+import 'package:aided_driving_app/pages/healthy/healthy_page.dart';
 
 class HomeChartViewPage extends StatelessWidget
 {
@@ -77,7 +79,6 @@ class HomeChartViewPage extends StatelessWidget
         '/privateDoctor' : (BuildContext context) => PrivateDoctorPage(),
         '/healthyReport' : (BuildContext context) => ReportPage(),
         '/myWallet' : (BuildContext context) => WalletPage(),
-        '/household' : (BuildContext context) => HouseholdPage(),
       },
     );
   }
@@ -102,14 +103,15 @@ class _MyHomePageState extends State<MyHomePage>
   GlobalKey _keyRed = GlobalKey();
   double _width=10;
   double _offset = 0.4;
+  int currentPage;
 
 
   @override
   void initState()
   {
-
     super.initState();
     _getwidthContainer();
+    currentPage = 0;
   }
 
   void _getwidthContainer()
@@ -303,6 +305,10 @@ class _MyHomePageState extends State<MyHomePage>
               },
             ),
             backgroundColor: Colors.grey[50],
+            trailing: Icon(
+              Icons.filter_center_focus,
+              size: 25,
+            ),
           ),
           bottomNavigationBar: FancyBottomNavigation(
               tabs: [
@@ -315,61 +321,30 @@ class _MyHomePageState extends State<MyHomePage>
               inactiveIconColor: GTheme.Colors.mainColor,
               onTabChangedListener: (position){
                 setState(() {
-
+                  currentPage = position;
                 });
               },
           ),
           body: SafeArea(
-              child: Material(
-                child:Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Column(
-                        children: <Widget>[
-                          Text('Offset'),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              SliderTheme(
-                                data: Theme.of(context).sliderTheme.copyWith(
-                                  valueIndicatorTextStyle: Theme.of(context).accentTextTheme.body2.copyWith(color: Colors.white),
-                                ),
-                                child: Slider(
-                                  activeColor: Colors.black,
-                                  //inactiveColor: Colors.white,
-                                  value: _offset,
-                                  min: 0.0,
-                                  max: 1,
-                                  divisions: 5,
-                                  semanticFormatterCallback: (double value) => value.round().toString(),
-                                  label: '$_offset',
-                                  onChanged: (a){
-                                    setState(() {
-                                      _offset = a;
-                                    });
-                                  },
-                                  onChangeEnd: (a){
-                                    _getwidthContainer();
-                                  },
-                                ),
-                              ),
-                              Text(_offset.toString()),
-                              //Text(_fontSize.toString()),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              )
+              child: _buildTabPage(currentPage),
           )
 
       ),
     );
+  }
+
+  Widget _buildTabPage(int poisition){
+    if(poisition == 0){
+      return Material(
+        child: DrivingPage(),
+      );
+    } else if(poisition == 1){
+      return HealthyPage();
+    } else{
+      return Material(
+        child: HouseholdPage(),
+      );
+    }
   }
 
 }

@@ -28,6 +28,7 @@ dependencies:
   share: ^0.6.0+1
   url_launcher: ^4.0.2
   charts_flutter: ^0.6.0
+  flutter_circular_slider: ^1.1.4
 
 dev_dependencies:
   flutter_test:

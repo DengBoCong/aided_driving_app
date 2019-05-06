@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:aided_driving_app/widgets/grid//flutter_staggered_grid_view.dart';
 
 List<StaggeredTile> _staggeredTiles = const <StaggeredTile>[
+  const StaggeredTile.count(4, 1),
   const StaggeredTile.count(2, 2),
   const StaggeredTile.count(2, 1),
   const StaggeredTile.count(1, 2),
@@ -15,6 +16,7 @@ List<StaggeredTile> _staggeredTiles = const <StaggeredTile>[
 ];
 
 List<Widget> _tiles = const <Widget>[
+  const _HouseholdItem(Colors.blue, Icons.radio),
   const _HouseholdItem(Colors.green, Icons.widgets),
   const _HouseholdItem(Colors.lightBlue, Icons.wifi),
   const _HouseholdItem(Colors.amber, Icons.panorama_wide_angle),
