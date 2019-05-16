@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:aided_driving_app/utils/tts/tts_helper.dart';
 
-class DataDialog extends StatelessWidget {
+class WidgetDialog extends StatelessWidget {
   final Widget widget;
   final Text title;
   final Text description;
@@ -14,11 +14,11 @@ class DataDialog extends StatelessWidget {
   final double cornerRadius;
   final VoidCallback onOkButtonPressed;
 
-  DataDialog({
+  WidgetDialog({
     Key key,
     @required this.widget,
-    @required this.title,
     @required this.onOkButtonPressed,
+    this.title,
     this.description,
     this.onlyOkButton = false,
     this.buttonOkText,
@@ -42,31 +42,20 @@ class DataDialog extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Column(
-              children: <Widget>[
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  height: (MediaQuery.of(context).size.height / 2) * 0.6,
-                  child: Card(
-                    elevation: 0.0,
-                    margin: EdgeInsets.all(0.0),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(cornerRadius),
-                            topLeft: Radius.circular(cornerRadius))),
-                    clipBehavior: Clip.antiAlias,
-                    child: widget,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 16.0),
-                  child: title,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: description,
-                ),
-              ],
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.5,
+              child: Card(
+                color: Colors.white,
+                elevation: 0.0,
+                margin: EdgeInsets.all(0.0),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(cornerRadius),
+                        topLeft: Radius.circular(cornerRadius))),
+                clipBehavior: Clip.antiAlias,
+                child: widget,
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -93,9 +82,7 @@ class DataDialog extends StatelessWidget {
                     color: buttonOkColor ?? Colors.green,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(buttonRadius)),
-                    onPressed: () {
-                      TtsHelper.instance.setLanguageAndSpeak('小沫同学为您服务，根据您近一周的心率均指变化情况，利用人工智能大数据处理，我们得出初步的结论报告，报告内容如下：您在开车过程中存在明显心率不齐情况，可能是因为疲劳驾驶等原因导致', 'zh');
-                    },
+                    onPressed: onOkButtonPressed ?? () {},
                     child: buttonOkText ??
                         Text(
                           '播报',

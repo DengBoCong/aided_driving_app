@@ -5,6 +5,7 @@ import 'package:aided_driving_app/data/theme.dart' as GTheme;
 import 'package:aided_driving_app/widgets/chart/circularprogress/animated_rotation_box.dart';
 import 'package:aided_driving_app/widgets/chart/spider_chart.dart';
 import 'package:aided_driving_app/widgets/dialog/data_dialog.dart';
+import 'package:aided_driving_app/widgets/chart/sparkline.dart';
 
 class HealthyPage extends StatelessWidget{
   @override
@@ -49,6 +50,7 @@ class GradientCircularProgressRouteState
       }
     });
     _animationController.forward();
+
   }
 
 
@@ -166,18 +168,27 @@ class GradientCircularProgressRouteState
                                       context: context,
                                       builder: (_) => DataDialog(
                                         key: Key("Network"),
-                                        widget: Image.network(
-                                          "https://raw.githubusercontent.com/Shashank02051997/FancyGifDialog-Android/master/GIF's/gif14.gif",
-                                          fit: BoxFit.cover,
+                                        widget: new Center(
+                                          child: new Container(
+                                            width: 270.0,
+                                            height: 200.0,
+                                            child: new Sparkline(
+                                              data: <double>[3,5,1,8,3,9,10],
+                                              lineColor: GTheme.Colors.mainColor,
+                                              pointsMode: PointsMode.all,
+                                              pointSize: 8.0,
+                                              pointColor: Colors.amber,
+                                            ),
+                                          ),
                                         ),
                                         title: Text(
-                                          'Granny Eating Chocolate',
+                                          '近一周的心率均值情况',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               fontSize: 22.0, fontWeight: FontWeight.w600),
                                         ),
                                         description: Text(
-                                          'This is a granny eating chocolate dialog box. This library helps you easily create fancy giffy dialog.',
+                                          '根据您近一周的心率均指变化情况，利用人工智能大数据处理，我们得出初步的结论报告，报告内容如下：您在开车过程中存在明显心率不齐情况，可能是因为疲劳驾驶等原因导致',
                                           textAlign: TextAlign.center,
                                         ),
                                         onOkButtonPressed: () {},

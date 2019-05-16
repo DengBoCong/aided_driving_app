@@ -391,9 +391,9 @@ class _DoctorMenuPageState extends State<DoctorMenuPage>{
       child: new ListTile(
         onTap: () => _navigateToDoctorDetails(item, index),
         leading: new CircleAvatar(
-        backgroundColor: item.color,
-        backgroundImage: new AssetImage('assets/images/person.jpg'),
-        foregroundColor: Colors.white,
+          backgroundColor: item.color,
+          backgroundImage: new AssetImage('assets/images/person.jpg'),
+          foregroundColor: Colors.white,
         ),
         title: new Text(item.title),
         subtitle: new Text(item.subtitle),

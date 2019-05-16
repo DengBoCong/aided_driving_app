@@ -6,11 +6,14 @@ class Colors {
 
   const Colors();
 
+  static const Color aboutLogoColor = const Color(0xFF0DBDB3);
+
   static const Color loginGradientStart = const Color(0xAF2ACFFF);
   static const Color loginGradientEnd = const Color(0xAF3992F1);
 
   static const Color mainColor = const Color(0xFF77B4F5);
   static const Color iconColor = const Color(0xFFFFFFFF);
+  static const Color mainBackColor = const Color(0xFFFAFAFA);
 
   static const Color mainColorTran = const Color(0x8F77B4F5);
   static const Color iconColorTran = const Color(0xAFFFFFFF);

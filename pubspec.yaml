@@ -29,6 +29,7 @@ dependencies:
   url_launcher: ^4.0.2
   charts_flutter: ^0.6.0
   flutter_circular_slider: ^1.1.4
+  tts: ^1.0.2
 
 dev_dependencies:
   flutter_test:
@@ -43,6 +44,7 @@ flutter:
 
   assets:
   - assets/images/
+  - assets/images/about_logo.png
   - resources/lang/
 #  - assets/images/launch_image.jpg
   #  - assets/images/person.jpg

@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_circular_slider/flutter_circular_slider.dart';
 import 'package:aided_driving_app/data/theme.dart' as GTheme;
 import 'package:aided_driving_app/widgets/chart/circularprogress/gradient_circular_progress_indicator.dart';
+import 'package:aided_driving_app/widgets/dialog/widget_dialog.dart';
+import 'package:aided_driving_app/pages/driving/driving_data_dialog.dart';
+import 'package:aided_driving_app/utils/tts/tts_helper.dart';
 
 class DrivingPage extends StatelessWidget{
   @override
@@ -27,6 +30,7 @@ class _SleepPageState extends State<SleepPage>
   with TickerProviderStateMixin{
   final baseColor = Color.fromRGBO(119, 180, 245, 0.3);
   AnimationController _animationController;
+  /*AnimationController _animationController1;*/
 
   int initTime;
   int endTime;
@@ -59,6 +63,27 @@ class _SleepPageState extends State<SleepPage>
       }
     });
     _animationController.forward();
+
+    /*_animationController1 =
+    new AnimationController(vsync: this, duration: Duration(seconds: 6));
+    bool isForward1 = true;
+    _animationController1.addStatusListener((status) {
+      if (status == AnimationStatus.forward) {
+        isForward = true;
+      } else if (status == AnimationStatus.completed ||
+          status == AnimationStatus.dismissed) {
+        if (isForward) {
+          *//*_animationController.reverse();*//*
+          _animationController1.reset();
+          _animationController1.forward();
+        } else {
+          _animationController1.forward();
+        }
+      } else if (status == AnimationStatus.reverse) {
+        isForward = false;
+      }
+    });
+    _animationController1.forward();*/
   }
 
   @override
@@ -151,8 +176,8 @@ class _SleepPageState extends State<SleepPage>
           ),
         ),
         Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          _formatBedTime('交通信号灯(红/黄/绿)', inBedTime),
-          _formatBedTime('车前行人(车速比率)', inBedTime),
+          _formatBedTime('交通信号灯(红/黄/绿)', _animationController.value*100),
+          _formatBedTime('车前行人(车速比率)', 0),
         ]),
         Padding(
           padding: EdgeInsets.only(right: 35),
@@ -161,8 +186,8 @@ class _SleepPageState extends State<SleepPage>
           ),
         ),
         Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          _formatBedTime('车道线虚线距离(左/右)', inBedTime),
-          _formatBedTime('车道线实线距离(左/右)', inBedTime),
+          _formatBedTime('车道线虚线距离(左/右)', _animationController.value*8),
+          _formatBedTime('车道线实线距离(左/右)', 8-_animationController.value*8),
         ]),
         Padding(
           padding: EdgeInsets.only(right: 35),
@@ -171,8 +196,8 @@ class _SleepPageState extends State<SleepPage>
           ),
         ),
         Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          _formatBedTime('行驶侧车辆距离(前/后)', inBedTime),
-          _formatBedTime('车辆行驶速度(当前/限速)', inBedTime),
+          _formatBedTime('行驶侧车辆距离(前/后)', 0),
+          _formatBedTime('车辆行驶速度(当前/限速)', (_animationController.value*10)),
         ]),
         Padding(
           padding: EdgeInsets.only(right: 35),
@@ -193,19 +218,42 @@ class _SleepPageState extends State<SleepPage>
     );
   }
 
-  Widget _formatBedTime(String pre, int time) {
+  Widget _formatBedTime(String pre, double time) {
     return Column(
       children: [
         Text(pre, style: TextStyle(color: GTheme.Colors.textColorB)),
-        Text(
-          '查看详参',
-          style: TextStyle(
-            color: Color.fromRGBO(49, 51, 53, 0.5),
-            fontSize: 13,
-          ),
+        FlatButton(
+          child: Text('查看详参'),
+          textColor: Color.fromRGBO(49, 51, 53, 0.5),
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (_) => WidgetDialog(
+                key: Key("Network"),
+                widget: new Center(
+                  child: new Container(
+                    width: 270.0,
+                    height: 460.0,
+                    child: DrivingDataDialog(),
+                  ),
+                ),
+                title: Text(
+                  '近一周的心率均值情况',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 22.0, fontWeight: FontWeight.w600),
+                ),
+                description: Text(
+                  '根据您近一周的心率均指变化情况，利用人工智能大数据处理，我们得出初步的结论报告，报告内容如下：您在开车过程中存在明显心率不齐情况，可能是因为疲劳驾驶等原因导致',
+                  textAlign: TextAlign.center,
+                ),
+                onOkButtonPressed: () {},
+              ),
+            );
+          },
         ),
         Text(
-          '${_formatTime(time)}',
+          '${time}',
           style: TextStyle(color: GTheme.Colors.mainColor),
         )
       ],
@@ -226,7 +274,7 @@ class _SleepPageState extends State<SleepPage>
     var hours = sleepTime ~/ 12;
     var minutes = (sleepTime % 12) * 5;
     /*return '${hours}h${minutes}m';*/
-    return '${sleepTime}\n驾驶评级\nA';
+    return '${(_animationController.value*100).toInt()}\n驾驶评级\nA';
   }
 
   int _generateRandomTime() => Random().nextInt(288);

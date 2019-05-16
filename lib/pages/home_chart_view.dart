@@ -13,6 +13,9 @@ import 'package:aided_driving_app/pages/wallet/wallet_page.dart';
 import 'package:aided_driving_app/pages/household/household_page.dart';
 import 'package:aided_driving_app/pages/driving/driving_page.dart';
 import 'package:aided_driving_app/pages/healthy/healthy_page.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:aided_driving_app/utils/tts/tts_helper.dart';
+import 'package:aided_driving_app/pages/about/about_page.dart';
 
 class HomeChartViewPage extends StatelessWidget
 {
@@ -21,11 +24,20 @@ class HomeChartViewPage extends StatelessWidget
       child: FloatingActionButton(
         heroTag: "callButton",
         backgroundColor: GTheme.Colors.mainColor,
-        onPressed: null,
+        onPressed: (){_launchPhone();},
         tooltip: '呼叫紧急联系人',
         child: Icon(Icons.call, color: GTheme.Colors.iconColor,),
       ),
     );
+  }
+
+  _launchPhone() async {
+    const url = 'tel:18870125082';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   Widget driving(){
@@ -33,7 +45,7 @@ class HomeChartViewPage extends StatelessWidget
       child: FloatingActionButton(
         heroTag: "drivingButton",
         backgroundColor: GTheme.Colors.mainColor,
-        onPressed: null,
+        onPressed: (){TtsHelper.instance.setLanguageAndSpeak("你好主人，我是小A，很荣幸能为你服务", "zh");},
         tooltip: '驾车模式',
         child: Icon(Icons.drive_eta, color: GTheme.Colors.iconColor,),
       ),
@@ -79,6 +91,7 @@ class HomeChartViewPage extends StatelessWidget
         '/privateDoctor' : (BuildContext context) => PrivateDoctorPage(),
         '/healthyReport' : (BuildContext context) => ReportPage(),
         '/myWallet' : (BuildContext context) => WalletPage(),
+        '/about' : (BuildContext context) => AboutPage(),
       },
     );
   }
@@ -247,6 +260,9 @@ class _MyHomePageState extends State<MyHomePage>
                         ListTile(
                           title: Text("关于陌梦车载"),
                           leading: Icon(Icons.error_outline),
+                          subtitle: Text("6sa"),
+                          trailing: Icon(Icons.access_alarm),
+                          onTap: () => Navigator.of(context).pushNamed('/about'),
                         )
                       ],
                     ),
