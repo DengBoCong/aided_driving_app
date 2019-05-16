@@ -317,6 +317,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.15.7"
+  intro_views_flutter:
+    dependency: "direct main"
+    description:
+      name: intro_views_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.6.0"
   io:
     dependency: transitive
     description:
@@ -352,6 +359,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.15"
+  loading_view:
+    dependency: "direct main"
+    description:
+      name: loading_view
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   local_auth:
     dependency: "direct main"
     description:

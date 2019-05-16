@@ -30,6 +30,8 @@ dependencies:
   charts_flutter: ^0.6.0
   flutter_circular_slider: ^1.1.4
   tts: ^1.0.2
+  loading_view: ^1.0.2
+  intro_views_flutter: ^2.6.0
 
 dev_dependencies:
   flutter_test:
@@ -45,6 +47,17 @@ flutter:
   assets:
   - assets/images/
   - assets/images/about_logo.png
+  - assets/images/icon_notify_done.png
+  - assets/images/icon_notify_error.png
+  - assets/images/icon_notify_info.png
+  - assets/images/air-hostess.png
+  - assets/images/airplane.png
+  - assets/images/bus-driver.png
+  - assets/images/bus.png
+  - assets/images/hotel.png
+  - assets/images/taxi.png
+  - assets/images/taxi-driver.png
+  - assets/images/waiter.png
   - resources/lang/
 #  - assets/images/launch_image.jpg
   #  - assets/images/person.jpg
@@ -77,3 +90,7 @@ flutter:
   - family: WorkSansMedium
     fonts:
     - asset: assets/fonts/Work_Sans/WorkSans-Medium.ttf
+
+  - family: MyFont
+    fonts:
+    - asset: assets/Fonts/sspu.ttf

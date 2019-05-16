@@ -16,6 +16,9 @@ import 'package:aided_driving_app/pages/healthy/healthy_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:aided_driving_app/utils/tts/tts_helper.dart';
 import 'package:aided_driving_app/pages/about/about_page.dart';
+import 'package:aided_driving_app/pages/device/device_page.dart';
+import 'package:aided_driving_app/pages/guide/guide_page.dart';
+import 'package:aided_driving_app/pages/help/help_page.dart';
 
 class HomeChartViewPage extends StatelessWidget
 {
@@ -45,7 +48,7 @@ class HomeChartViewPage extends StatelessWidget
       child: FloatingActionButton(
         heroTag: "drivingButton",
         backgroundColor: GTheme.Colors.mainColor,
-        onPressed: (){TtsHelper.instance.setLanguageAndSpeak("你好主人，我是小A，很荣幸能为你服务", "zh");},
+        onPressed: (){TtsHelper.instance.setLanguageAndSpeak("你好主人，我是小沫，很荣幸能为你服务", "zh");},
         tooltip: '驾车模式',
         child: Icon(Icons.drive_eta, color: GTheme.Colors.iconColor,),
       ),
@@ -92,6 +95,9 @@ class HomeChartViewPage extends StatelessWidget
         '/healthyReport' : (BuildContext context) => ReportPage(),
         '/myWallet' : (BuildContext context) => WalletPage(),
         '/about' : (BuildContext context) => AboutPage(),
+        '/device' : (BuildContext context) => DevicePage(),
+        '/guide' : (BuildContext context) => GuidePage(),
+        '/help' : (BuildContext context) => HelpPage(),
       },
     );
   }
@@ -210,14 +216,12 @@ class _MyHomePageState extends State<MyHomePage>
                         ListTile(
                           title:  Text("我的消息"),
                           leading:Icon(Icons.email),
-                          subtitle: Text("hah"),
                           trailing: Icon(Icons.add),
                           onTap: () => Navigator.of(context).pushNamed('/myMessage'),
                         ),
                         ListTile(
                           title:   Text("我的钱包"),
                           leading: Icon(Icons.monetization_on),
-                          subtitle: Text("hah"),
                           trailing: Icon(Icons.assignment),
                           onTap: () => Navigator.of(context).pushNamed('/myWallet'),
                         ),
@@ -231,7 +235,6 @@ class _MyHomePageState extends State<MyHomePage>
                         ListTile(
                           title:   Text("私人医生"),
                           leading: Icon(Icons.perm_contact_calendar),
-                          subtitle: Text("6sa"),
                           trailing: Icon(Icons.access_alarm),
                           onTap: () => Navigator.of(context).pushNamed('/privateDoctor'),
                         ),
@@ -239,6 +242,12 @@ class _MyHomePageState extends State<MyHomePage>
                         ListTile(
                           title:   Text("设备管理"),
                           leading: Icon(Icons.screen_lock_portrait),
+                          trailing: Icon(Icons.access_alarm),
+                          onTap: () => Navigator.of(context).pushNamed('/device'),
+                        ),
+                        ListTile(
+                          title: Text("云端同步"),
+                          leading: Icon(Icons.cloud_upload),
                         ),
                         ListTile(
                           title:   Text("娱乐咨询"),
@@ -250,17 +259,18 @@ class _MyHomePageState extends State<MyHomePage>
                         ),
                         Divider(),
                         ListTile(
-                          title: Text("云端同步"),
-                          leading: Icon(Icons.cloud_upload),
+                          title: Text("新手指南"),
+                          leading: Icon(Icons.lightbulb_outline),
+                          onTap: () => Navigator.of(context).pushNamed('/guide'),
                         ),
                         ListTile(
                           title: Text("帮助与反馈"),
                           leading: Icon(Icons.contact_mail),
+                          onTap: () => Navigator.of(context).pushNamed('/help'),
                         ),
                         ListTile(
                           title: Text("关于陌梦车载"),
                           leading: Icon(Icons.error_outline),
-                          subtitle: Text("6sa"),
                           trailing: Icon(Icons.access_alarm),
                           onTap: () => Navigator.of(context).pushNamed('/about'),
                         )
