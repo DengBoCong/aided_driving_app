@@ -210,7 +210,38 @@ class GradientCircularProgressRouteState
                                 child: FlatButton(
                                   child: Text('血压 121/79 mmHg'),
                                   textColor: GTheme.Colors.textColorB,
-                                  onPressed: (){},
+                                  onPressed: (){
+                                    showDialog(
+                                      context: context,
+                                      builder: (_) => DataDialog(
+                                        key: Key("Network"),
+                                        widget: new Center(
+                                          child: new Container(
+                                            width: 270.0,
+                                            height: 200.0,
+                                            child: new Sparkline(
+                                              data: <double>[3,5,1,8,3,9,10],
+                                              lineColor: GTheme.Colors.mainColor,
+                                              pointsMode: PointsMode.all,
+                                              pointSize: 8.0,
+                                              pointColor: Colors.amber,
+                                            ),
+                                          ),
+                                        ),
+                                        title: Text(
+                                          '近一周的血压均值情况',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              fontSize: 22.0, fontWeight: FontWeight.w600),
+                                        ),
+                                        description: Text(
+                                          '根据您近一周的血压均指变化情况，利用人工智能大数据处理，我们得出初步的结论报告，报告内容如下：您在开车过程中存在明显血压参差不齐情况，可能是因为疲劳驾驶等原因导致',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        onOkButtonPressed: () {},
+                                      ),
+                                    );
+                                  },
                                 )/*Text('血压 121/79 mmHg')*/,
                               ),
                               Padding(

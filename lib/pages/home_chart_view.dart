@@ -19,6 +19,7 @@ import 'package:aided_driving_app/pages/about/about_page.dart';
 import 'package:aided_driving_app/pages/device/device_page.dart';
 import 'package:aided_driving_app/pages/guide/guide_page.dart';
 import 'package:aided_driving_app/pages/help/help_page.dart';
+import 'package:aided_driving_app/pages/personal/personal_page.dart';
 
 class HomeChartViewPage extends StatelessWidget
 {
@@ -98,6 +99,7 @@ class HomeChartViewPage extends StatelessWidget
         '/device' : (BuildContext context) => DevicePage(),
         '/guide' : (BuildContext context) => GuidePage(),
         '/help' : (BuildContext context) => HelpPage(),
+        '/personal' : (BuildContext context) => PersonalPage(),
       },
     );
   }
@@ -186,10 +188,15 @@ class _MyHomePageState extends State<MyHomePage>
                                     SizedBox(
                                       width: 45,
                                       height: 45,
-                                      child: CircleAvatar(
-                                        backgroundImage: new AssetImage('assets/images/person.jpg'),
-                                        /*Icon(Icons.person,color: Colors.white,size: 40)*/
-                                        backgroundColor: Colors.grey,
+                                      child: IconButton(
+                                          icon: CircleAvatar(
+                                            backgroundImage: new AssetImage('assets/images/person.jpg'),
+                                            /*Icon(Icons.person,color: Colors.white,size: 40)*/
+                                            backgroundColor: Colors.grey,
+                                          ),
+                                          onPressed: (){
+                                            Navigator.of(context).pushNamed("/personal");
+                                          }
                                       ),
                                     ),
                                     Text("   林沫",

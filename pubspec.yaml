@@ -58,6 +58,9 @@ flutter:
   - assets/images/taxi.png
   - assets/images/taxi-driver.png
   - assets/images/waiter.png
+  - assets/images/identify_personal.png
+  - assets/images/identify_enterprise.png
+  - assets/images/identify_developer.png
   - resources/lang/
 #  - assets/images/launch_image.jpg
   #  - assets/images/person.jpg

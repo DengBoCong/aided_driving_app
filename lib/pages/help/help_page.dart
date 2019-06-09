@@ -24,6 +24,20 @@ class HelpPage extends StatefulWidget{
 }
 
 class _HelpPageState extends State<HelpPage>{
+  List<String> _list = [
+    "我的年度健康汇总报告在哪里看?",
+    "没有TTS健康状态播报，哪里可以打开?",
+    "我的辅助驾驶检测设备损坏，如何解决?",
+    "去哪里设计健康检测的时间间隔?",
+    "检测闪退、自动暂停检测问题如何解决?",
+    "哪些机型能够完美适配系统?",
+    "检测数据评价结论与实际情况不符，如何上报?",
+    "如何同步数据?",
+    "私人医生能否设置多个?",
+    "换了手机号，如何一键同步云端历史数据?",
+    "如何防止我们升级我的账户?"
+  ];
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -35,19 +49,20 @@ class _HelpPageState extends State<HelpPage>{
         elevation: 0,
       ),
       body: FloatingSearchBar.builder(
-        itemCount: 100,
+        itemCount: 11,
         itemBuilder: (BuildContext context, int index) {
           return ListTile(
-            leading: Text(index.toString()),
+            leading: Text(_list[index]),
+            trailing: Icon(Icons.chevron_right),
           );
         },
         leading: CircleAvatar(
           child: Icon(Icons.search, color: GTheme.Colors.textColorB,),
           backgroundColor: Colors.transparent,
         ),
-        endDrawer: Drawer(
+        /*endDrawer: Drawer(
           child: Container(),
-        ),
+        ),*/
         onChanged: (String value) {},
         onTap: () {},
         decoration: InputDecoration.collapsed(
