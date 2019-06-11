@@ -20,9 +20,19 @@ import 'package:aided_driving_app/pages/device/device_page.dart';
 import 'package:aided_driving_app/pages/guide/guide_page.dart';
 import 'package:aided_driving_app/pages/help/help_page.dart';
 import 'package:aided_driving_app/pages/personal/personal_page.dart';
+import 'package:flutter/services.dart';
 
 class HomeChartViewPage extends StatelessWidget
 {
+  void enterAI() async{
+    const platform = const MethodChannel("com.power/AI");
+    try{
+      await platform.invokeMethod("enterIvwActivity");
+    } on PlatformException catch(e){
+      print(e.toString());
+    }
+  }
+
   Widget call(){
     return Container(
       child: FloatingActionButton(
@@ -49,7 +59,10 @@ class HomeChartViewPage extends StatelessWidget
       child: FloatingActionButton(
         heroTag: "drivingButton",
         backgroundColor: GTheme.Colors.mainColor,
-        onPressed: (){TtsHelper.instance.setLanguageAndSpeak("你好主人，我是小沫，很荣幸能为你服务", "zh");},
+        onPressed: (){
+          /*TtsHelper.instance.setLanguageAndSpeak("你好主人，我是小沫，很荣幸能为你服务", "zh");*/
+          enterAI();
+        },
         tooltip: '驾车模式',
         child: Icon(Icons.drive_eta, color: GTheme.Colors.iconColor,),
       ),

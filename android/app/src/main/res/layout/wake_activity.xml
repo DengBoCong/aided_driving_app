@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="20dp" >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="小沫无处不在"
+            android:textSize="30sp" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/wake_demo_hint"
+        android:textSize="16sp" />
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:gravity="center"
+		android:layout_height="350dp">
+
+		<com.wang.avi.AVLoadingIndicatorView
+			android:id="@+id/avi"
+			android:layout_width="300dp"
+			android:layout_height="300dp"
+			style="@style/AVLoadingIndicatorView.Large" />
+	</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/txt_thresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="声音质量评估最低有效值(禁止修改):"
+            android:textSize="15sp" />
+
+        <SeekBar
+            android:id="@+id/seekBar_thresh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/resource"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:text="唤醒小沫后，持续优化网络模式(禁止修改)：" />
+
+	<RadioGroup 
+        android:id="@+id/ivw_net_mode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:weightSum="2"
+        android:orientation="horizontal"
+	    >
+	    
+	    <RadioButton 
+	        android:id="@+id/mode_close"
+	        android:layout_width="0dp"
+	        android:layout_weight="1"
+	        android:layout_height="wrap_content"
+	        android:text="关闭"
+	        android:enabled="false"/>
+	    <RadioButton 
+	        android:id="@+id/mode_open"
+	        android:layout_width="0dp"
+	        android:layout_weight="1"
+	        android:layout_height="wrap_content"
+	        android:text="开启"
+			android:checked="true"
+	        android:enabled="false"/>
+	</RadioGroup>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dip"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btn_start"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="内测小沫" />
+
+        <Button
+            android:id="@+id/btn_stop"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="升级小沫" />
+    </LinearLayout>
+        
+    <!--<ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp" >
+
+        <TextView
+            android:id="@+id/txt_show_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp" />
+    </ScrollView>-->
+
+</LinearLayout>
