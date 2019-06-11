@@ -70,7 +70,8 @@ public class IvwActivity extends Activity implements OnClickListener{
 							Manifest.permission.WRITE_EXTERNAL_STORAGE,
 							Manifest.permission.LOCATION_HARDWARE,Manifest.permission.READ_PHONE_STATE,
 							Manifest.permission.WRITE_SETTINGS,Manifest.permission.READ_EXTERNAL_STORAGE,
-							Manifest.permission.RECORD_AUDIO,Manifest.permission.READ_CONTACTS},0x0010);
+							Manifest.permission.RECORD_AUDIO,Manifest.permission.READ_CONTACTS,Manifest.permission.SEND_SMS,
+							Manifest.permission.READ_SMS,Manifest.permission.RECEIVE_SMS,Manifest.permission.CALL_PHONE},0x0010);
 				}
 			}
 		} catch (Exception e) {

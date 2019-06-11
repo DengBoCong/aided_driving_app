@@ -4,12 +4,21 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -38,6 +47,11 @@ import com.iflytek.cloud.util.ResourceUtil.RESOURCE_TYPE;
 import com.power.aided_driving_app.R;
 import com.wang.avi.AVLoadingIndicatorView;
 
+import java.util.ArrayList;
+
+import androidx.core.app.ActivityCompat;
+import dmax.dialog.SpotsDialog;
+
 public class WakeActivity extends Activity{
 	private String TAG = "ivw";
 	private Toast mToast;
@@ -54,7 +68,7 @@ public class WakeActivity extends Activity{
 	private final static int MAX = 3000;
 	private final static int MIN = 0;
 	private int curThresh = 1450;
-	private String threshStr = "声音质量评估最低有效值(禁止修改):";
+	private String threshStr = "";
 	private String keep_alive = "1";
     private String ivwNetMode = "0";
     private SpeechSynthesizer mTts;
@@ -68,12 +82,13 @@ public class WakeActivity extends Activity{
 	private int mPercentForBuffering = 0;
 	//播放进度
 	private int mPercentForPlaying = 0;
-    
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.wake_activity);
+        requestPermissions();
 
 		// 初始化合成对象
 		mTts = SpeechSynthesizer.createSynthesizer(this, mTtsInitListener);
@@ -82,6 +97,13 @@ public class WakeActivity extends Activity{
 			this.showTip( "创建对象失败，请确认 libmsc.so 放置正确，\n 且有调用 createUtility 进行初始化" );
 			return;
 		}
+
+        // 设置参数
+        setParam();
+        int code = mTts.startSpeaking("已进入驾驶模式，小沫时刻为你服务", mTtsListener);
+        if (code != ErrorCode.SUCCESS) {
+            showTip("语音合成失败,错误码: " + code);
+        }
 
 		initUi();
 		// 初始化唤醒对象
@@ -100,7 +122,7 @@ public class WakeActivity extends Activity{
 		seekbarThresh = (SeekBar)findViewById(R.id.seekBar_thresh);
 		seekbarThresh.setMax(MAX - MIN);
 		seekbarThresh.setProgress(curThresh);
-		tvThresh.setText(threshStr + curThresh);
+		tvThresh.setText(threshStr);
 		setRadioEnable(false);
 		seekbarThresh.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 
@@ -115,7 +137,7 @@ public class WakeActivity extends Activity{
 			@Override
 			public void onProgressChanged(SeekBar arg0, int arg1, boolean arg2) {
 				curThresh = seekbarThresh.getProgress() + MIN;
-				tvThresh.setText(threshStr + curThresh);
+				tvThresh.setText(threshStr);
 			}
 		});
 		
@@ -177,6 +199,7 @@ public class WakeActivity extends Activity{
 		} else {
 			showTip("唤醒未初始化");
 		}
+
 	}
 	
 	/**
@@ -257,16 +280,21 @@ public class WakeActivity extends Activity{
 				buffer.append("【尾端点】" + object.optString("eos"));
 				resultString =buffer.toString();
 
-				Log.i( TAG, "*******************: "+object.optString("id") );
-				if(object.optString("id").equals("5")){
-					Log.i( TAG, "在嘛小沫");
-					// 设置参数
-					setParam();
-					int code = mTts.startSpeaking("在，有什么吩咐嘛", mTtsListener);
-					if (code != ErrorCode.SUCCESS) {
-						showTip("语音合成失败,错误码: " + code);
-					}
-				}
+				if(object.optString("id").equals("0")){
+					startCheckDriving();
+				}else if(object.optString("id").equals("1")){
+				    startCheckHealth();
+                }else if(object.optString("id").equals("2")){
+				    startAnswer();
+                }else if(object.optString("id").equals("3")){
+				    startHelp();
+                }else if(object.optString("id").equals("4")){
+				    startCanDriving();
+                }else if(object.optString("id").equals("5")){
+					startZaiMa();
+				}else{
+				    startReport();
+                }
 
 			} catch (JSONException e) {
 				resultString = "结果解析出错";
@@ -274,6 +302,197 @@ public class WakeActivity extends Activity{
 			}
 			/*textView.setText(resultString);*/
 		}
+
+		private void startCheckDriving(){
+			int code = mTts.startSpeaking("正在收集实时驾驶数据，请稍后", mTtsListener);
+			if(code != ErrorCode.SUCCESS){
+				showTip("语音合成失败，错误码: " + code);
+			}
+
+			AlertDialog spotsDialog = new SpotsDialog.Builder()
+					.setContext(WakeActivity.this)
+					.setMessage("正在检测驾驶数据...")
+					.build();
+
+			spotsDialog.show();
+
+			Handler handler = new Handler();
+			Runnable runnable = new Runnable() {
+				@Override
+				public void run() {
+					int code = mTts.startSpeaking("驾驶数据收集完毕，车速13，车道正常，后方有来车，无红绿灯路口", mTtsListener);
+					if(code != ErrorCode.SUCCESS){
+						showTip("语音合成失败，错误码: " + code);
+					}
+					spotsDialog.dismiss();
+				}
+			};
+			handler.postDelayed(runnable, 3000);
+
+		}
+
+		private void startCheckHealth(){
+		    int code = mTts.startSpeaking("正在收集实时健康数据，请稍后", mTtsListener);
+		    if(code != ErrorCode.SUCCESS){
+		        showTip("语音合成失败，错误码: " + code);
+            }
+
+			AlertDialog alertDialog = new SpotsDialog.Builder()
+					.setContext(WakeActivity.this)
+					.setMessage("正在检测健康数据...")
+					.build();
+
+		    alertDialog.show();
+
+		    Handler handler = new Handler();
+		    Runnable runnable = new Runnable() {
+				@Override
+				public void run() {
+					int code = mTts.startSpeaking("健康数据收集完毕，心率73，血压121/79，体温37.7℃，血脂4.9，血氧饱和度90%", mTtsListener);
+					if(code != ErrorCode.SUCCESS){
+						showTip("语音合成失败，错误码: " + code);
+					}
+					alertDialog.dismiss();
+				}
+			};
+			handler.postDelayed(runnable, 3000);
+
+        }
+
+        private void startAnswer(){
+            int code = mTts.startSpeaking("正在紧急分析驾驶及健康数据", mTtsListener);
+            if(code != ErrorCode.SUCCESS){
+                showTip("语音合成失败，错误码: " + code);
+            }
+
+			AlertDialog alertDialog = new SpotsDialog.Builder()
+					.setContext(WakeActivity.this)
+					.setMessage("数据分析中...")
+					.build();
+
+			alertDialog.show();
+
+			Handler handler = new Handler();
+			Runnable runnable = new Runnable() {
+				@Override
+				public void run() {
+					int code = mTts.startSpeaking("分析完毕，检测到你处于驾驶中，建议靠边停车，你的基本指标数据正常，数据已打包发送至医师中心进行人工分析", mTtsListener);
+					if(code != ErrorCode.SUCCESS){
+						showTip("语音合成失败，错误码: " + code);
+					}
+					alertDialog.dismiss();
+
+					PendingIntent pendingIntent = PendingIntent.getActivity(WakeActivity.this, 0, new Intent(), 0);
+					SmsManager sms = SmsManager.getDefault();
+					ArrayList<String> texts = sms.divideMessage("姓名：林沫\n年龄：20\n用户定位：湖北省武汉市洪山区珞喻路1037号附近路段\n用户历史数据报告编码：201906160098LINMO\n是否存在病史(在线报告编码)：Afo39sAL1212\n智能数据分析警告程度：轻度\n基本健康指标数据：心率_97次/分  血压_121/79mmHg  体温_37.7℃  血脂_4.9mmol/L  血氧饱和度_90%\n基本驾驶指标数据：车速_13km/h  车体传感器设备状况_正常");
+					for(String text : texts){
+						sms.sendTextMessage("15179284059", null,
+								text,
+								pendingIntent, null);
+					}
+				}
+			};
+			handler.postDelayed(runnable, 5000);
+        }
+
+        private void startHelp(){
+		    int code = mTts.startSpeaking("拨打紧急联系人中", mTtsListener);
+            if(code != ErrorCode.SUCCESS){
+                showTip("语音合成失败，错误码: " + code);
+            }
+
+			AlertDialog alertDialog = new SpotsDialog.Builder()
+					.setContext(WakeActivity.this)
+					.setMessage("正在采取紧急措施...")
+					.build();
+
+			alertDialog.show();
+
+			Handler handler = new Handler();
+			Runnable runnable = new Runnable() {
+				@Override
+				public void run() {
+					int code = mTts.startSpeaking("分析完毕，数据已打包发送至医师中心", mTtsListener);
+					if(code != ErrorCode.SUCCESS){
+						showTip("语音合成失败，错误码: " + code);
+					}
+					alertDialog.dismiss();
+
+					Intent intent = new Intent(Intent.ACTION_CALL);
+					Uri data = Uri.parse("tel:" + "15079065240");
+					intent.setData(data);
+					startActivity(intent);
+				}
+			};
+			handler.postDelayed(runnable, 9000);
+        }
+
+        private void startCanDriving(){
+            int code = mTts.startSpeaking("正在为你分析车况及健康状况", mTtsListener);
+            if(code != ErrorCode.SUCCESS){
+                showTip("语音合成失败，错误码: " + code);
+            }
+
+			AlertDialog alertDialog = new SpotsDialog.Builder()
+					.setContext(WakeActivity.this)
+					.setMessage("正在分析...")
+					.build();
+
+			alertDialog.show();
+
+			Handler handler = new Handler();
+			Runnable runnable = new Runnable() {
+				@Override
+				public void run() {
+					int code = mTts.startSpeaking("外接传感器连接正常，基本健康指标正常", mTtsListener);
+					if(code != ErrorCode.SUCCESS){
+						showTip("语音合成失败，错误码: " + code);
+					}
+					alertDialog.dismiss();
+				}
+			};
+			handler.postDelayed(runnable, 3000);
+        }
+
+		private void startZaiMa(){
+			int code = mTts.startSpeaking("在，有什么吩咐嘛", mTtsListener);
+			if (code != ErrorCode.SUCCESS) {
+				showTip("语音合成失败,错误码: " + code);
+			}
+		}
+
+		private void startReport(){
+            int code = mTts.startSpeaking("周报获取中", mTtsListener);
+            if (code != ErrorCode.SUCCESS) {
+                showTip("语音合成失败,错误码: " + code);
+            }
+
+			AlertDialog alertDialog = new SpotsDialog.Builder()
+					.setContext(WakeActivity.this)
+					.setMessage("周报获取中...")
+					.build();
+
+			alertDialog.show();
+
+			Handler handler = new Handler();
+			Runnable runnable = new Runnable() {
+				@Override
+				public void run() {
+					int code = mTts.startSpeaking("正在生成智能周报", mTtsListener);
+					if(code != ErrorCode.SUCCESS){
+						showTip("语音合成失败，错误码: " + code);
+					}
+					alertDialog.dismiss();
+					new SpotsDialog.Builder()
+							.setContext(WakeActivity.this)
+							.setMessage("周报获取中...")
+							.setCancelable(true)
+							.build()
+							.show();
+				}
+			};
+			handler.postDelayed(runnable, 3000);
+        }
 
 		@Override
 		public void onError(SpeechError error) {
@@ -460,4 +679,23 @@ public class WakeActivity extends Activity{
 			}*/
 		}
 	};
+
+    private void requestPermissions(){
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                int permission = ActivityCompat.checkSelfPermission(this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                if(permission!= PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this,new String[] {
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.LOCATION_HARDWARE,Manifest.permission.READ_PHONE_STATE,
+                            Manifest.permission.WRITE_SETTINGS,Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.RECORD_AUDIO,Manifest.permission.READ_CONTACTS,Manifest.permission.SEND_SMS,
+                            Manifest.permission.READ_SMS,Manifest.permission.RECEIVE_SMS,Manifest.permission.CALL_PHONE},0x0010);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

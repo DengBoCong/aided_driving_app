@@ -119,7 +119,7 @@
 
     <!-- 唤醒 -->
     <string name="example_explain_wake">语音操控，安全驾驶，支持：</string>
-    <string name="wake_demo_hint">智能化小沫时刻陪伴在你的左右，你随时可以对它发出指令，当引擎计算得分大于所设置的唤醒有效值时，即可进行唤醒小沫。</string>
+    <string name="wake_demo_hint">智能化小沫时刻陪伴在你的左右，你随时可以对它发出指令，小沫将会更具指令进行操作。</string>
     <string name="oneshot_demo_hint">请点击“唤醒+识别”后读出您在开放平台购买的唤醒词+语法中指定的识别对象，当引擎计算得分大于您设置的门限值时，即可进行唤醒+识别。</string>
     <string name="oneshot_resource_hint">本示例识别词语为“张三|李四|张海洋”，请开发者将语法文件中的唤醒词字段替换，本地语法定义详见demo工程的asset/wake.bnf文件。</string>
 </resources>

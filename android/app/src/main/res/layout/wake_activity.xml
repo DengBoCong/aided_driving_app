@@ -11,13 +11,19 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingTop="20dp" >
-        <TextView
+        <!--<TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:text="小沫无处不在"
-            android:textSize="30sp" />
+            android:textSize="30sp" />-->
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_face_black_24dp"/>
     </LinearLayout>
 
     <TextView
@@ -49,9 +55,9 @@
             android:id="@+id/txt_thresh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="声音质量评估最低有效值(禁止修改):"
+            android:text=""
             android:textSize="15sp" />
-
+		<!--声音质量评估最低有效值(禁止修改):-->
         <SeekBar
             android:id="@+id/seekBar_thresh"
             android:layout_width="match_parent"
@@ -63,7 +69,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dip"
-        android:text="唤醒小沫后，持续优化网络模式(禁止修改)：" />
+        android:text="" />
+	<!--唤醒小沫后，持续优化网络模式(禁止修改)：-->
 
 	<RadioGroup 
         android:id="@+id/ivw_net_mode"
@@ -95,7 +102,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dip"
+        android:layout_marginTop="100dip"
         android:orientation="horizontal" >
 
         <Button
