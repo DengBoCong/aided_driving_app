@@ -46,7 +46,7 @@ class AboutPage extends StatelessWidget{
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Expanded(
-                      child: Text("2.6.6.1", style: TextStyle(color: GTheme.Colors.textColorB, fontSize: 15),textAlign: TextAlign.center,),
+                      child: Text("1.6.6.1", style: TextStyle(color: GTheme.Colors.textColorB, fontSize: 15),textAlign: TextAlign.center,),
                     ),
                   ],
                 ),

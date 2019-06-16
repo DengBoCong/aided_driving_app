@@ -68,7 +68,7 @@ class DrivingDataDialog extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(top: 20.0),
                           child: Text(
-                            '1 次经过路口', style: TextStyle(
+                            '0 次经过路口', style: TextStyle(
                               color: Colors.black,
                               fontSize: 20.0,
                               fontWeight: FontWeight.bold
@@ -79,14 +79,14 @@ class DrivingDataDialog extends StatelessWidget {
                           padding: const EdgeInsets.only(top: 25.0),
                           child: Column(
                             children: <Widget>[
-                              ticketDetailsWidget('检测设备编号', '76836A45', '日期', '2019-5-7'),
+                              ticketDetailsWidget('检测设备编号', '76836A45', '日期', '2019-6-15'),
                               Padding(
                                 padding: const EdgeInsets.only(top: 12.0, right: 0.0),
-                                child: ticketDetailsWidget('红灯数量', '1', '绿灯数量', '3'),
+                                child: ticketDetailsWidget('红灯数量', '0', '绿灯数量', '0'),
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(top: 12.0, right: 0.0),
-                                child: ticketDetailsWidget('当前驾驶状态', '良好', '网络速率', '366KB/s'),
+                                child: ticketDetailsWidget('当前驾驶状态', '未驾驶', '网络速率', '366KB/s'),
                               ),
                             ],
                           ),

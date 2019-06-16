@@ -320,7 +320,7 @@ public class WakeActivity extends Activity{
 			Runnable runnable = new Runnable() {
 				@Override
 				public void run() {
-					int code = mTts.startSpeaking("驾驶数据收集完毕，车速13，车道正常，后方有来车，无红绿灯路口", mTtsListener);
+					int code = mTts.startSpeaking("驾驶数据收集完毕，车速0，未检测到车道线，未检测到车辆，未检测到红绿灯路口", mTtsListener);
 					if(code != ErrorCode.SUCCESS){
 						showTip("语音合成失败，错误码: " + code);
 					}
@@ -348,7 +348,7 @@ public class WakeActivity extends Activity{
 		    Runnable runnable = new Runnable() {
 				@Override
 				public void run() {
-					int code = mTts.startSpeaking("健康数据收集完毕，心率73，血压121/79，体温37.7℃，血脂4.9，血氧饱和度90%", mTtsListener);
+					int code = mTts.startSpeaking("健康数据收集完毕，心率81，血压121/79，体温37.3℃，血脂4.9mmol/L，血氧饱和度90%", mTtsListener);
 					if(code != ErrorCode.SUCCESS){
 						showTip("语音合成失败，错误码: " + code);
 					}
@@ -376,7 +376,7 @@ public class WakeActivity extends Activity{
 			Runnable runnable = new Runnable() {
 				@Override
 				public void run() {
-					int code = mTts.startSpeaking("分析完毕，检测到你处于驾驶中，建议靠边停车，你的基本指标数据正常，数据已打包发送至医师中心进行人工分析", mTtsListener);
+					int code = mTts.startSpeaking("分析完毕，检测到你没有在驾驶中，检查是否靠边停车，你的基本指标数据异常，数据已打包发送至医师中心进行人工分析", mTtsListener);
 					if(code != ErrorCode.SUCCESS){
 						showTip("语音合成失败，错误码: " + code);
 					}
@@ -384,7 +384,7 @@ public class WakeActivity extends Activity{
 
 					PendingIntent pendingIntent = PendingIntent.getActivity(WakeActivity.this, 0, new Intent(), 0);
 					SmsManager sms = SmsManager.getDefault();
-					ArrayList<String> texts = sms.divideMessage("姓名：林沫\n年龄：20\n用户定位：湖北省武汉市洪山区珞喻路1037号附近路段\n用户历史数据报告编码：201906160098LINMO\n是否存在病史(在线报告编码)：Afo39sAL1212\n智能数据分析警告程度：轻度\n基本健康指标数据：心率_97次/分  血压_121/79mmHg  体温_37.7℃  血脂_4.9mmol/L  血氧饱和度_90%\n基本驾驶指标数据：车速_13km/h  车体传感器设备状况_正常");
+					ArrayList<String> texts = sms.divideMessage("姓名：林沫\n年龄：20\n用户定位：江西省南昌市青山湖区江西财经大学麦庐校区附近\n用户历史数据报告编码：201906160098LINMO\n是否存在病史(在线报告编码)：Afo39sAL1212\n智能数据分析警告程度：轻度\n基本健康指标数据：心率_0次/分  血压_0mmHg  体温_0℃  血脂_0mmol/L  血氧饱和度_0%\n基本驾驶指标数据：车速_0km/h  车体传感器设备状况_异常");
 					for(String text : texts){
 						sms.sendTextMessage("15179284059", null,
 								text,
@@ -419,7 +419,7 @@ public class WakeActivity extends Activity{
 					alertDialog.dismiss();
 
 					Intent intent = new Intent(Intent.ACTION_CALL);
-					Uri data = Uri.parse("tel:" + "15079065240");
+					Uri data = Uri.parse("tel:" + "15179284059");
 					intent.setData(data);
 					startActivity(intent);
 				}
@@ -444,7 +444,7 @@ public class WakeActivity extends Activity{
 			Runnable runnable = new Runnable() {
 				@Override
 				public void run() {
-					int code = mTts.startSpeaking("外接传感器连接正常，基本健康指标正常", mTtsListener);
+					int code = mTts.startSpeaking("外接传感器连接异常，基本健康指标异常", mTtsListener);
 					if(code != ErrorCode.SUCCESS){
 						showTip("语音合成失败，错误码: " + code);
 					}
@@ -483,12 +483,30 @@ public class WakeActivity extends Activity{
 						showTip("语音合成失败，错误码: " + code);
 					}
 					alertDialog.dismiss();
-					new SpotsDialog.Builder()
+					AlertDialog alertDialog1 = new SpotsDialog.Builder()
 							.setContext(WakeActivity.this)
-							.setMessage("周报获取中...")
-							.setCancelable(true)
-							.build()
-							.show();
+							.setMessage("获取成功，正在生成...")
+							.build();
+					alertDialog1.show();
+
+					Handler handler1 = new Handler();
+					Runnable runnable1 = new Runnable() {
+						@Override
+						public void run() {
+							int code = mTts.startSpeaking("周报获取成功，已发送至我的消息", mTtsListener);
+							if(code != ErrorCode.SUCCESS){
+								showTip("语音合成失败，错误码: " + code);
+							}
+							alertDialog1.dismiss();
+
+							PendingIntent pendingIntent = PendingIntent.getActivity(WakeActivity.this, 0, new Intent(), 0);
+							SmsManager sms = SmsManager.getDefault();
+							sms.sendTextMessage("18870125082", null,
+									"http://a",
+									pendingIntent, null);
+						}
+					};
+					handler1.postDelayed(runnable1, 3000);
 				}
 			};
 			handler.postDelayed(runnable, 3000);

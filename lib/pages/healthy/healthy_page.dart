@@ -28,12 +28,17 @@ class GradientCircularProgressRouteState
     extends State<GradientCircularProgressRoute>
     with TickerProviderStateMixin {
   AnimationController _animationController;
+  AnimationController _animationController1;
+  
+  List<double> list1 = [72,86,75,76,72,72,86,86,75,75,85,83,72,72,72,72,72,72,76,75,78,75,72,86,75,76,72,72,86,86,75,75,85,83,72,72,72,72,72,72,76,75,78,75,72,86,75,76,72,72,86,86,75,75,85,83,72,72,72,72,72,72,76,75,78,75,72,86,75,76,72,72,86,86,75,75,85,83,72,72,72,72,72,72,76,75,78,75,72,86,75,76,72,72,86,86,75,75,85,83,72,72,72,72,72,72,76,75,78,75,72,86,75,76,72,72,86,86,75,75,85,83,72,72,72,72,72,72,76,75,78,75,];
 
   @override
   void initState() {
     super.initState();
     _animationController =
     new AnimationController(vsync: this, duration: Duration(seconds: 3));
+    _animationController1 =
+    new AnimationController(vsync: this, duration: Duration(seconds: 30));
     bool isForward = true;
     _animationController.addStatusListener((status) {
       if (status == AnimationStatus.forward) {
@@ -51,12 +56,29 @@ class GradientCircularProgressRouteState
     });
     _animationController.forward();
 
+    bool isForward1 = true;
+    _animationController1.addStatusListener((status) {
+      if (status == AnimationStatus.forward) {
+        isForward1 = true;
+      } else if (status == AnimationStatus.completed ||
+          status == AnimationStatus.dismissed) {
+        if (isForward1) {
+          _animationController1.reverse();
+        } else {
+          _animationController1.forward();
+        }
+      } else if (status == AnimationStatus.reverse) {
+        isForward1 = false;
+      }
+    });
+    _animationController1.forward();
   }
 
 
   @override
   void dispose() {
     _animationController.dispose();
+    _animationController1.dispose();
     super.dispose();
   }
 
@@ -70,6 +92,9 @@ class GradientCircularProgressRouteState
             AnimatedBuilder(
               animation: _animationController,
               builder: (BuildContext context, Widget child) {
+                String count = (_animationController1.value*100).toStringAsFixed(0);
+                int value = int.parse(count);
+                print("jisuan:$value");
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: Column(
@@ -161,7 +186,7 @@ class GradientCircularProgressRouteState
                               Padding(
                                 padding: EdgeInsets.only(top: 50, left: 12),
                                 child: FlatButton(
-                                  child: Text('心率 73次/分'),
+                                  child: Text('心率 ${list1[value]}次/分'),
                                   textColor: GTheme.Colors.textColorB,
                                   onPressed: () {
                                     showDialog(

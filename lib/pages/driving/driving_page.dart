@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_circular_slider/flutter_circular_slider.dart';
 import 'package:aided_driving_app/data/theme.dart' as GTheme;
@@ -30,6 +31,7 @@ class _SleepPageState extends State<SleepPage>
   with TickerProviderStateMixin{
   final baseColor = Color.fromRGBO(119, 180, 245, 0.3);
   AnimationController _animationController;
+  AnimationController _animationController1;
   /*AnimationController _animationController1;*/
 
   int initTime;
@@ -38,13 +40,20 @@ class _SleepPageState extends State<SleepPage>
   int inBedTime;
   int outBedTime;
 
+  List<double> list1 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,00,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];//[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,20,20,20,20,20,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+  List<double> list2 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];//[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+  List<double> list5 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];//[0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+  List<double> list6 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];//[13,16,15,17,13,15,15,13,13,13,13,15,16,17,17,15,15,15,15,13,13,14,14,14,14,11,15,15,16,14,13,15,13,13,15,14,15,15,16,14,15,16,14,15,15,14,13,13,13,13,14,15,15,16,14,15,15,14,15,16,15,16,15,15,14,14,15,16,14,15,15,15,13,13,13,14,15,15,16,16,14,14,13,13,15,14,15,14,15,16,14,13,15,14,13,15,15,15,15,15,15,15,13,13,13,13];
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _shuffle();
     _animationController =
-    new AnimationController(vsync: this, duration: Duration(seconds: 3));
+    new AnimationController(vsync: this, duration: new Duration(seconds: 3));
+    _animationController1 =
+    new AnimationController(vsync: this, duration: new Duration(seconds: 30));
     bool isForward = true;
     _animationController.addStatusListener((status) {
       if (status == AnimationStatus.forward) {
@@ -63,6 +72,26 @@ class _SleepPageState extends State<SleepPage>
       }
     });
     _animationController.forward();
+
+
+    bool isForward1 = true;
+    _animationController1.addStatusListener((status) {
+      if (status == AnimationStatus.forward) {
+        isForward1 = true;
+      } else if (status == AnimationStatus.completed ||
+          status == AnimationStatus.dismissed) {
+        if (isForward1) {
+          /*_animationController.reverse();*/
+          _animationController1.reset();
+          _animationController1.forward();
+        } else {
+          _animationController1.forward();
+        }
+      } else if (status == AnimationStatus.reverse) {
+        isForward1 = false;
+      }
+    });
+    _animationController1.forward();
 
     /*_animationController1 =
     new AnimationController(vsync: this, duration: Duration(seconds: 6));
@@ -90,6 +119,7 @@ class _SleepPageState extends State<SleepPage>
   void dispose() {
     // TODO: implement dispose
     _animationController.dispose();
+    _animationController1.dispose();
     super.dispose();
   }
 
@@ -176,8 +206,8 @@ class _SleepPageState extends State<SleepPage>
           ),
         ),
         Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          _formatBedTime('交通信号灯(红/黄/绿)', _animationController.value*100),
-          _formatBedTime('车前行人(车速比率)', 0),
+          _formatBedTime('交通信号灯(红/黄/绿)', list1, 1),
+          _formatBedTime('车前行人', list2, 2),
         ]),
         Padding(
           padding: EdgeInsets.only(right: 35),
@@ -186,8 +216,8 @@ class _SleepPageState extends State<SleepPage>
           ),
         ),
         Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          _formatBedTime('车道线虚线距离(左/右)', _animationController.value*8),
-          _formatBedTime('车道线实线距离(左/右)', 8-_animationController.value*8),
+          _fromatBedT('车道线虚线'),
+          _fromatBedT('车道线实线'),
         ]),
         Padding(
           padding: EdgeInsets.only(right: 35),
@@ -196,8 +226,8 @@ class _SleepPageState extends State<SleepPage>
           ),
         ),
         Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          _formatBedTime('行驶侧车辆距离(前/后)', 0),
-          _formatBedTime('车辆行驶速度(当前/限速)', (_animationController.value*10)),
+          _formatBedTime('行驶侧车辆', list5, 5),
+          _formatBedTime('车辆行驶速度', list6, 6),
         ]),
         Padding(
           padding: EdgeInsets.only(right: 35),
@@ -218,7 +248,9 @@ class _SleepPageState extends State<SleepPage>
     );
   }
 
-  Widget _formatBedTime(String pre, double time) {
+  Widget _fromatBedT(String pre){
+    double count = (_animationController.value*100);
+
     return Column(
       children: [
         Text(pre, style: TextStyle(color: GTheme.Colors.textColorB)),
@@ -237,23 +269,65 @@ class _SleepPageState extends State<SleepPage>
                     child: DrivingDataDialog(),
                   ),
                 ),
-                title: Text(
-                  '近一周的心率均值情况',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 22.0, fontWeight: FontWeight.w600),
-                ),
-                description: Text(
-                  '根据您近一周的心率均指变化情况，利用人工智能大数据处理，我们得出初步的结论报告，报告内容如下：您在开车过程中存在明显心率不齐情况，可能是因为疲劳驾驶等原因导致',
-                  textAlign: TextAlign.center,
-                ),
+                title: Text(""),
+                description: Text(""),
                 onOkButtonPressed: () {},
               ),
             );
           },
         ),
         Text(
-          '${time}',
+          '0',//${count}
+          style: TextStyle(color: GTheme.Colors.mainColor),
+        )
+      ],
+    );
+  }
+
+  Widget _formatBedTime(String pre, List<double> time, int kind) {
+    String count = (_animationController1.value*100).toStringAsFixed(0);
+    int value;
+    setState(() {
+      value = int.parse(count);
+    });
+    if(time[value] == 20){
+      TtsHelper.instance.setLanguageAndSpeak('红绿灯路口，绿灯', 'zh');
+    }
+    if(time[value] == 1){
+      TtsHelper.instance.setLanguageAndSpeak('注意有来车', 'zh');
+    }
+
+    if(time[value] == 2){
+      TtsHelper.instance.setLanguageAndSpeak('注意有行人', 'zh');
+    }
+
+    return Column(
+      children: [
+        Text(pre, style: TextStyle(color: GTheme.Colors.textColorB)),
+        FlatButton(
+          child: Text('查看详参'),
+          textColor: Color.fromRGBO(49, 51, 53, 0.5),
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (_) => WidgetDialog(
+                key: Key("Network"),
+                widget: new Center(
+                  child: new Container(
+                    width: 270.0,
+                    height: 460.0,
+                    child: DrivingDataDialog(),
+                  ),
+                ),
+                title: Text(""),
+                description: Text(""),
+                onOkButtonPressed: () {},
+              ),
+            );
+          },
+        ),
+        Text(
+          '${time[value]}',
           style: TextStyle(color: GTheme.Colors.mainColor),
         )
       ],
